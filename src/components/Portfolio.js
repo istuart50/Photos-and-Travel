@@ -1,17 +1,24 @@
 // src/components/Portfolio.js
 import { useState, useEffect } from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, CircleMarker, Tooltip } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import LOCATIONS from '../data/locations';
 
-// Fix Leaflet's broken default marker icons in CRA/Webpack
-delete L.Icon.Default.prototype._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-  iconUrl: require('leaflet/dist/images/marker-icon.png'),
-  shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
-});
+function ClickableMarker({ loc, onSelect }) {
+  return (
+    <CircleMarker
+      center={loc.coords}
+      radius={12}
+      pathOptions={{ color: '#fff', weight: 2, fillColor: '#c9a84c', fillOpacity: 1 }}
+      eventHandlers={{ click: () => onSelect(loc) }}
+    >
+      <Tooltip direction="top" offset={[0, -14]} opacity={1}>
+        {loc.name}
+      </Tooltip>
+    </CircleMarker>
+  );
+}
 
 function Gallery({ location, onClose }) {
   const [activePhoto, setActivePhoto] = useState(0);
@@ -82,8 +89,8 @@ function Portfolio() {
         </p>
         <div className="map-container">
           <MapContainer
-            center={[20, 10]}
-            zoom={2}
+            center={[38.5352, -123.0014]}
+            zoom={10}
             scrollWheelZoom={false}
             style={{ height: '100%', width: '100%' }}
           >
@@ -92,21 +99,7 @@ function Portfolio() {
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             {LOCATIONS.map((loc) => (
-              <Marker
-                key={loc.id}
-                position={loc.coords}
-                eventHandlers={{ click: () => setSelectedLocation(loc) }}
-              >
-                <Popup>
-                  <strong>{loc.name}</strong><br />
-                  <button
-                    className="popup-btn"
-                    onClick={() => setSelectedLocation(loc)}
-                  >
-                    View Photos
-                  </button>
-                </Popup>
-              </Marker>
+              <ClickableMarker key={loc.id} loc={loc} onSelect={setSelectedLocation} />
             ))}
           </MapContainer>
         </div>
