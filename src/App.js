@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import './App.css';
+import Portfolio from './components/Portfolio';
 
 const CARDS = [
   { icon: '⚡', title: 'Fast', desc: 'Optimized for performance from day one.' },
@@ -36,6 +37,7 @@ function App() {
         <div className="navbar-brand">YourBrand</div>
         <ul className="navbar-links">
           <li><button onClick={() => scrollTo('home')}>Home</button></li>
+          <li><button onClick={() => scrollTo('portfolio')}>Portfolio</button></li>
           <li><button onClick={() => scrollTo('about')}>About</button></li>
           <li><button onClick={() => scrollTo('contact')}>Contact</button></li>
         </ul>
@@ -44,13 +46,16 @@ function App() {
       {/* Home / Hero */}
       <section id="home" className="section parallax parallax-home">
         <div className="section-content">
-          <h1>Welcome to Your Landing Page</h1>
+          <h1>CS Photos</h1>
           <p>A modern, clean template to get you started.</p>
           <button className="cta-btn" onClick={() => scrollTo('about')}>
             Learn More
           </button>
         </div>
       </section>
+
+      {/* Portfolio */}
+      <Portfolio />
 
       {/* About */}
       <section id="about" className="section solid-section">
