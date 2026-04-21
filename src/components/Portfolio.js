@@ -89,8 +89,8 @@ function Portfolio() {
         </p>
         <div className="map-container">
           <MapContainer
-            center={[38.5352, -123.0014]}
-            zoom={10}
+            center={[39.5, -98.35]}
+            zoom={4}
             scrollWheelZoom={false}
             style={{ height: '100%', width: '100%' }}
           >
